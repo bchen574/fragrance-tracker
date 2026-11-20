@@ -35,24 +35,28 @@ export function FragranceCard({
 
           <div className="flex flex-col gap-x-6 gap-y-2">
             {accords && (
-              <div className="flex flex-wrap items-center gap-2 gap-x-2">
+              <div className="flex flex-row items-start gap-2">
                 <Layers className="w-4 text-muted-foreground" />
-                {accords.map((accord) => (
-                  <Badge key={accord} variant="secondary">
-                    {accord}
-                  </Badge>
-                ))}
+                <div className="flex flex-1 flex-row flex-wrap gap-x-2 gap-y-2">
+                  {accords.map((accord) => (
+                    <Badge key={accord} variant="secondary">
+                      {accord}
+                    </Badge>
+                  ))}
+                </div>
               </div>
             )}
 
             {character && (
-              <div className="flex flex-wrap items-center gap-2">
+              <div className="flex flex-row items-start gap-2">
                 <Drama className="w-4 text-muted-foreground" />
-                {character?.map((char) => (
-                  <Badge key={char} variant="secondary">
-                    {char}
-                  </Badge>
-                ))}
+                <div className="flex flex-1 flex-row flex-wrap gap-x-2 gap-y-2">
+                  {character?.map((char) => (
+                    <Badge key={char} variant="secondary">
+                      {char}
+                    </Badge>
+                  ))}
+                </div>
               </div>
             )}
           </div>
