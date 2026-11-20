@@ -1,13 +1,19 @@
-import { FragranceCard } from "./fragrance-card" 
-import type { Fragrance} from '@/types/fragrance';
 
+"use client"
 
+import { useState } from "react"
+import { FragranceCard } from "./fragrance-card"
+import type { Fragrance } from "@/types/fragrance"
+import { Toggle } from "@/components/ui/toggle"
+import { Heart } from "lucide-react"
+
+type User = "Brian" | "Cathy"
 
 type FragranceFilters = {
   brand?: string
   accord?: string
   character?: string
-  liked?: boolean
+  likedBy?: User
 }
 
 function filterFragrances(
@@ -31,8 +37,11 @@ function filterFragrances(
     }
 
     if (
-      filters.liked !== undefined &&
-      !fragrance.reviews?.some((review) => review.liked === filters.liked)
+      filters.likedBy &&
+      !fragrance.reviews?.some(
+        (review) =>
+          review.user === filters.likedBy && review.liked === true
+      )
     ) {
       return false
     }
@@ -41,17 +50,53 @@ function filterFragrances(
   })
 }
 
+export function FragranceList({
+  fragrances,
+  filters = {},
+}: {
+  fragrances: Fragrance[]
+  filters?: FragranceFilters
+}) {
+  const [likedBy, setLikedBy] = useState<User | undefined>(
+    undefined
+  )
 
-export  function FragranceList({fragrances , filters = {} }: { fragrances: Fragrance[] , filters?: FragranceFilters } ) {
+  function toggleUser(user: User) {
+    setLikedBy((prev) => (prev === user ? undefined : user))
+  }
 
-    const filteredFragrances = filterFragrances(fragrances, filters) 
+  const filteredFragrances = filterFragrances(fragrances, {
+    ...filters,
+    likedBy,
+  })
 
-    return (
-        <div className="flex w-full max-w-3xl flex-col gap-4">
-        {filteredFragrances.map((fragrance) => (
-          <FragranceCard key={fragrance.id} {...fragrance} />
-        ))}
+  return (
+    <div className="flex w-full max-w-3xl flex-col gap-4">
+      <div className="flex flex-row gap-2">
+        <Toggle
+          variant="outline"
+          size="sm"
+          pressed={likedBy === "Brian"}
+          onPressedChange={() => toggleUser("Brian")}
+        >
+          <Heart className="group-aria-pressed/toggle:fill-foreground" />
+          Liked by Brian
+        </Toggle>
+
+        <Toggle
+          variant="outline"
+          size="sm"
+          pressed={likedBy === "Cathy"}
+          onPressedChange={() => toggleUser("Cathy")}
+        >
+          <Heart className="group-aria-pressed/toggle:fill-foreground" />
+          Liked by Cathy
+        </Toggle>
       </div>
 
-    )
+      {filteredFragrances.map((fragrance) => (
+        <FragranceCard key={fragrance.id} {...fragrance} />
+      ))}
+    </div>
+  )
 }

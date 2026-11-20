@@ -14,7 +14,7 @@ import { Fragrance } from "@/types/fragrance"
 
 import { Badge } from "@/components/ui/badge"
 
-import { SquarePen, Palette, Layers, Drama, Heart } from "lucide-react"
+import { SquarePen, Layers, Drama, Heart } from "lucide-react"
 
 export function FragranceCard({
   brand,
@@ -82,15 +82,17 @@ export function FragranceCard({
                     {review.text}
                   </p>
 
-                  <div className="flex h-5 flex-col justify-center">
+                  {review.liked && (
+                    <div className="flex h-5 flex-col justify-center">
                     <Heart
-                      className={`size-3 shrink-0 ${
-                        review.liked
-                          ? "fill-rose-400 text-red-500"
-                          : "fill-secondary text-muted-foreground"
-                      }`}
+                      className="size-3  fill-rose-600 text-rose-600"
                     />
                   </div>
+
+
+                  )}
+
+                  
                 </div>
               ))}
             </div>
