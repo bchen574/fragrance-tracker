@@ -14,17 +14,17 @@ import { Fragrance } from "@/types/fragrance"
 
 import { Badge } from "@/components/ui/badge"
 
-import { SquarePen, Flower, Layers, Drama } from "lucide-react"
+import { SquarePen, Palette, Layers, Drama, Heart } from "lucide-react"
 
 export function FragranceCard({
   brand,
   name,
   accords,
-  review,
+  reviews,
   character,
 }: Fragrance) {
   return (
-    <Card className="w-full">
+    <Card className="w-full shadow-xs">
       <CardHeader>
         <div className="flex flex-col gap-3">
           <div className="align-center flex flex-row gap-1">
@@ -35,8 +35,8 @@ export function FragranceCard({
 
           <div className="flex flex-col gap-x-6 gap-y-2">
             {accords && (
-              <div className="gapx-x-2 flex flex-wrap items-center gap-2">
-                <Layers className="w-3" />
+              <div className="flex flex-wrap items-center gap-2 gap-x-2">
+                <Layers className="w-4 text-muted-foreground" />
                 {accords.map((accord) => (
                   <Badge key={accord} variant="secondary">
                     {accord}
@@ -47,7 +47,7 @@ export function FragranceCard({
 
             {character && (
               <div className="flex flex-wrap items-center gap-2">
-                <Drama className="w-3" />
+                <Drama className="w-4 text-muted-foreground" />
                 {character?.map((char) => (
                   <Badge key={char} variant="secondary">
                     {char}
@@ -65,17 +65,28 @@ export function FragranceCard({
         </CardAction>
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
-        {review && (
+        {reviews && (
           <div className="flex w-full flex-col gap-2">
             <Separator />
-            <div className="flex flex-row gap-5 pt-1">
-              {review.map((review) => (
-                <div
-                  className="flex flex-row items-center gap-1"
-                  key={review.user}
-                >
-                  <div className="font-medium">{review.user}:</div>
-                  <p className="text-muted-foreground">{review.text}</p>
+            <div className="flex flex-row flex-wrap gap-x-5 gap-y-2 pt-1">
+              {reviews.map((review) => (
+                <div className="flex flex-row gap-1" key={review.user}>
+                  <p className="text-muted-foreground">
+                    <span className="font-medium text-foreground">
+                      {review.user}:
+                    </span>{" "}
+                    {review.text}
+                  </p>
+
+                  <div className="flex h-5 w-3 flex-col items-start">
+                    <Heart
+                      className={
+                        review.liked
+                          ? "w-full fill-rose-400 text-red-500"
+                          : "w-full fill-secondary text-muted-foreground"
+                      }
+                    />
+                  </div>
                 </div>
               ))}
             </div>

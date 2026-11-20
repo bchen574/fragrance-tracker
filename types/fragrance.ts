@@ -4,5 +4,5 @@ export type Fragrance = {
   name: string
   accords: string[]
   character?: string[]
-  review?: { user: string; text: string }[]
+  reviews?: { user: string; text: string; liked: boolean | null }[]
 }
