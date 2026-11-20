@@ -33,10 +33,13 @@ export async function getFragrances(): Promise<Fragrance[]> {
     )
     .order("id")
     .overrideTypes<FragranceRow[]>()
+   console.log(JSON.stringify(data, null, 2))
 
   if (error) {
     throw new Error(error.message)
   }
+
+ 
 
   return data.map((fragrance) => ({
     id: fragrance.id,
@@ -55,4 +58,6 @@ export async function getFragrances(): Promise<Fragrance[]> {
       liked: review.like,
     })),
   }))
+
+   
 }

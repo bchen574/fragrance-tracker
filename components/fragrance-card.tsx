@@ -24,7 +24,7 @@ export function FragranceCard({
   character,
 }: Fragrance) {
   return (
-    <Card className="w-full shadow-xs">
+    <Card className="w-full shadow-sm">
       <CardHeader>
         <div className="flex flex-col gap-3">
           <div className="align-center flex flex-row gap-1">
