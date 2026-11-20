@@ -78,13 +78,13 @@ export function FragranceCard({
                     {review.text}
                   </p>
 
-                  <div className="flex h-5 w-3 flex-col items-start">
+                  <div className="flex h-5 flex-col justify-center">
                     <Heart
-                      className={
+                      className={`size-3 shrink-0 ${
                         review.liked
-                          ? "w-full fill-rose-400 text-red-500"
-                          : "w-full fill-secondary text-muted-foreground"
-                      }
+                          ? "fill-rose-400 text-red-500"
+                          : "fill-secondary text-muted-foreground"
+                      }`}
                     />
                   </div>
                 </div>
