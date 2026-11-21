@@ -67,6 +67,10 @@ export function FragranceList({ fragrances }: { fragrances: Fragrance[] }) {
   }
 
   const filteredFragrances = filterFragrances(fragrances, activeFilters)
+  const groupedFragrances = Object.groupBy(
+    filteredFragrances,
+    (fragrance) => fragrance.brand
+  )
 
   return (
     <div className="flex w-full max-w-3xl flex-col gap-4">
@@ -92,8 +96,16 @@ export function FragranceList({ fragrances }: { fragrances: Fragrance[] }) {
         </Toggle>
       </div>
 
-      {filteredFragrances.map((fragrance) => (
-        <FragranceCard key={fragrance.id} {...fragrance} />
+      {Object.entries(groupedFragrances).map(([brand, group]) => (
+        <div key={brand} className="flex flex-col gap-3 pb-3">
+          <h2 className="text-xs text-muted-foreground">
+            {brand} ({group.length})
+          </h2>
+
+          {group?.map((fragrance) => (
+            <FragranceCard key={fragrance.id} {...fragrance} />
+          ))}
+        </div>
       ))}
     </div>
   )

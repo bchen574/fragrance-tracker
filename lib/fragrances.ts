@@ -33,31 +33,29 @@ export async function getFragrances(): Promise<Fragrance[]> {
     )
     .order("id")
     .overrideTypes<FragranceRow[]>()
-   console.log(JSON.stringify(data, null, 2))
+  console.log(JSON.stringify(data, null, 2))
 
   if (error) {
     throw new Error(error.message)
   }
 
- 
+  return data
+    .map((fragrance) => ({
+      id: fragrance.id,
+      brand: fragrance.brand,
+      name: fragrance.name,
 
-  return data.map((fragrance) => ({
-    id: fragrance.id,
-    brand: fragrance.brand,
-    name: fragrance.name,
+      accords: fragrance.fragrance_accords.map((item) => item.accords.name),
 
-    accords: fragrance.fragrance_accords.map((item) => item.accords.name),
+      character: fragrance.fragrance_characters.map(
+        (item) => item.characters.name
+      ),
 
-    character: fragrance.fragrance_characters.map(
-      (item) => item.characters.name
-    ),
-
-    reviews: fragrance.reviews.map((review) => ({
-      user: review.users.name,
-      text: review.review ?? "",
-      liked: review.like,
-    })),
-  }))
-
-   
+      reviews: fragrance.reviews.map((review) => ({
+        user: review.users.name,
+        text: review.review ?? "",
+        liked: review.like,
+      })),
+    }))
+    .sort((a, b) => a.brand.localeCompare(b.brand))
 }
