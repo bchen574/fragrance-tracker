@@ -20,7 +20,7 @@ import type { Review } from "../types/fragrance"
 type FragranceAttributeType = "accord" | "character"
 
 function FragranceAttributeIcon({ type }: { type: FragranceAttributeType }) {
-  const iconStyling = "h-5 p-1 text-muted-foreground"
+  const iconStyling = "h-5 shrink-0 p-1 text-muted-foreground"
 
   if (type === "character") {
     return <Drama className={iconStyling} />
@@ -41,27 +41,29 @@ function FragranceAttributeList({
   if (!values?.length) return null
 
   return (
-    <div className="flex flex-row flex-wrap">
+    <div className="flex flex-row">
       <FragranceAttributeIcon type={type} />
-      {values.map((value) => (
-        <Badge
-          key={value}
-          variant={type === "character" ? "secondary" : "outline"}
-        >
-          {value}
-        </Badge>
-      ))}
+      <div className="flex flex-row flex-wrap gap-x-1 gap-y-1">
+        {values.map((value) => (
+          <Badge
+            key={value}
+            variant={type === "character" ? "secondary" : "outline"}
+          >
+            {value}
+          </Badge>
+        ))}
+      </div>
     </div>
   )
 }
 
 function FragranceReviewList({ reviews }: { reviews: Review[] }) {
   return (
-    <div className="flex w-full flex-col gap-2">
+    <div className="flex w-full flex-col gap-1">
       <Separator />
       <div className="flex flex-row flex-wrap gap-x-5 gap-y-2 pt-1">
         {reviews.map((review) => (
-          <div className="flex flex-row gap-1" key={review.user}>
+          <div className="flex flex-row text-xs" key={review.user}>
             <p className="text-muted-foreground">
               <span className="font-medium text-foreground">
                 {review.user}:
@@ -70,8 +72,8 @@ function FragranceReviewList({ reviews }: { reviews: Review[] }) {
             </p>
 
             {review.liked && (
-              <div className="flex h-5 flex-col justify-center">
-                <Heart className="size-3 fill-rose-600 text-rose-600" />
+              <div className="flex h-4 flex-col justify-center p-0.5">
+                <Heart className="fill-rose-600 text-rose-600" />
               </div>
             )}
           </div>
@@ -89,11 +91,11 @@ export function FragranceCard({
   character,
 }: Fragrance) {
   return (
-    <Card className="w-full">
+    <Card className="w-full gap-1">
       <CardHeader>
-        <div className="flex flex-col gap-3">
-          <div className="align-center flex flex-row gap-1">
-            <h4 className="pb-1 font-medium">{name}</h4>
+        <div className="flex flex-row flex-wrap gap-x-5 gap-y-2">
+          <div className="align-center 0 flex flex-row gap-1">
+            <h4 className="font-medium">{name}</h4>
             <h4>·</h4>
             <h4 className="text-muted-foreground">{brand}</h4>
           </div>

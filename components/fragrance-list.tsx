@@ -73,7 +73,7 @@ export function FragranceList({ fragrances }: { fragrances: Fragrance[] }) {
   )
 
   return (
-    <div className="flex w-full max-w-3xl flex-col gap-4">
+    <div className="flex w-full max-w-5xl flex-col gap-4">
       <div className="flex flex-row gap-2">
         <Toggle
           variant="outline"
@@ -99,7 +99,7 @@ export function FragranceList({ fragrances }: { fragrances: Fragrance[] }) {
       {Object.entries(groupedFragrances).map(([brand, group]) => (
         <div key={brand} className="flex flex-col gap-3 pb-3">
           <h2 className="text-xs text-muted-foreground">
-            {brand} ({group.length})
+            {brand} ({group?.length})
           </h2>
 
           {group?.map((fragrance) => (
