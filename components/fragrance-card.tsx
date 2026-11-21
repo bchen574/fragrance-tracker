@@ -45,10 +45,7 @@ function FragranceAttributeList({
       <FragranceAttributeIcon type={type} />
       <div className="flex flex-row flex-wrap gap-x-1 gap-y-1">
         {values.map((value) => (
-          <Badge
-            key={value}
-            variant={type === "character" ? "secondary" : "outline"}
-          >
+          <Badge key={value} variant="outline">
             {value}
           </Badge>
         ))}
