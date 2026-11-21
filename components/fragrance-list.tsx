@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState } from "react"
@@ -13,7 +12,7 @@ type FragranceFilters = {
   brand?: string
   accord?: string
   character?: string
-  likedBy?: User
+  likedBy?: User[]
 }
 
 function filterFragrances(
@@ -38,9 +37,10 @@ function filterFragrances(
 
     if (
       filters.likedBy &&
-      !fragrance.reviews?.some(
-        (review) =>
-          review.user === filters.likedBy && review.liked === true
+      !filters.likedBy.every((user) =>
+        fragrance.reviews?.some(
+          (review) => review.user === user && review.liked === true
+        )
       )
     ) {
       return false
@@ -50,25 +50,23 @@ function filterFragrances(
   })
 }
 
-export function FragranceList({
-  fragrances,
-  filters = {},
-}: {
-  fragrances: Fragrance[]
-  filters?: FragranceFilters
-}) {
-  const [likedBy, setLikedBy] = useState<User | undefined>(
-    undefined
-  )
+export function FragranceList({ fragrances }: { fragrances: Fragrance[] }) {
+  const [activeFilters, setActiveFilters] = useState<FragranceFilters>({})
 
-  function toggleUser(user: User) {
-    setLikedBy((prev) => (prev === user ? undefined : user))
+  function toggleLikedBy(user: User) {
+    setActiveFilters((prev) => {
+      const likedBy = prev.likedBy ?? []
+
+      return {
+        ...prev,
+        likedBy: likedBy.includes(user)
+          ? likedBy.filter((u) => u !== user)
+          : [...likedBy, user],
+      }
+    })
   }
 
-  const filteredFragrances = filterFragrances(fragrances, {
-    ...filters,
-    likedBy,
-  })
+  const filteredFragrances = filterFragrances(fragrances, activeFilters)
 
   return (
     <div className="flex w-full max-w-3xl flex-col gap-4">
@@ -76,8 +74,8 @@ export function FragranceList({
         <Toggle
           variant="outline"
           size="sm"
-          pressed={likedBy === "Brian"}
-          onPressedChange={() => toggleUser("Brian")}
+          pressed={activeFilters.likedBy?.includes("Brian") ?? false}
+          onPressedChange={() => toggleLikedBy("Brian")}
         >
           <Heart className="group-aria-pressed/toggle:fill-foreground" />
           Liked by Brian
@@ -86,8 +84,8 @@ export function FragranceList({
         <Toggle
           variant="outline"
           size="sm"
-          pressed={likedBy === "Cathy"}
-          onPressedChange={() => toggleUser("Cathy")}
+          pressed={activeFilters.likedBy?.includes("Cathy") ?? false}
+          onPressedChange={() => toggleLikedBy("Cathy")}
         >
           <Heart className="group-aria-pressed/toggle:fill-foreground" />
           Liked by Cathy
