@@ -11,13 +11,12 @@ import Link from "next/link"
 
 export function Navigation() {
   return (
-    <div className="py- mt-2 flex w-full max-w-5xl flex-row rounded-lg border bg-card px-2 py-2">
+    <div className="sticky top-0 z-50 flex w-full flex-row items-center border-b bg-card px-3 pt-3 pb-2">
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
             <NavigationMenuLink>Fragrances</NavigationMenuLink>
           </NavigationMenuItem>
-
           <NavigationMenuItem>
             <NavigationMenuTrigger>AI Taste Analysis</NavigationMenuTrigger>
             <NavigationMenuContent>

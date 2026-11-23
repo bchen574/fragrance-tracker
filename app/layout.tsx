@@ -34,6 +34,7 @@ export default function RootLayout({
       <body className="flex flex-col items-center">
         <ThemeProvider>
           <Navigation />
+
           {children}
         </ThemeProvider>
       </body>

@@ -117,7 +117,7 @@ export function FragranceCard({
 }: Fragrance) {
   return (
     <Drawer swipeDirection="right">
-      <Card className="w-full gap-1">
+      <Card className="w-full gap-1 rounded-sm">
         <CardHeader>
           <div className="flex flex-row flex-wrap gap-x-5 gap-y-2">
             <div className="align-center 0 flex flex-row gap-1">

@@ -121,7 +121,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-gray-50 text-foreground dark:bg-[hsl(0,0%,12%)];
+    @apply bg-[#FDFDFD] text-foreground dark:bg-[hsl(0,0%,8%)];
   }
   html {
     @apply font-sans;
