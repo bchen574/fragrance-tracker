@@ -7,6 +7,18 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
+
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 
@@ -80,6 +92,22 @@ function FragranceReviewList({ reviews }: { reviews: Review[] }) {
   )
 }
 
+const editFragranceDrawer = (
+  <DrawerContent>
+    <DrawerHeader>
+      <DrawerTitle>Fragrance Name , Brand</DrawerTitle>
+    </DrawerHeader>
+    <div className="p-4">
+      <h2 className="text-sm">Section</h2>
+      <h2 className="text-sm">Content</h2>
+    </div>
+    <DrawerFooter>
+      <Button>Submit</Button>
+      <DrawerClose render={<Button variant="outline" />}>Cancel</DrawerClose>
+    </DrawerFooter>
+  </DrawerContent>
+)
+
 export function FragranceCard({
   brand,
   name,
@@ -88,30 +116,35 @@ export function FragranceCard({
   character,
 }: Fragrance) {
   return (
-    <Card className="w-full gap-1">
-      <CardHeader>
-        <div className="flex flex-row flex-wrap gap-x-5 gap-y-2">
-          <div className="align-center 0 flex flex-row gap-1">
-            <h4 className="font-medium">{name}</h4>
-            <h4>·</h4>
-            <h4 className="text-muted-foreground">{brand}</h4>
+    <Drawer swipeDirection="right">
+      <Card className="w-full gap-1">
+        <CardHeader>
+          <div className="flex flex-row flex-wrap gap-x-5 gap-y-2">
+            <div className="align-center 0 flex flex-row gap-1">
+              <h4 className="font-medium">{name}</h4>
+              <h4>·</h4>
+              <h4 className="text-muted-foreground">{brand}</h4>
+            </div>
+            <div className="flex flex-row flex-wrap gap-x-4 gap-y-2">
+              <FragranceAttributeList type="character" values={character} />
+              <FragranceAttributeList type="accord" values={accords} />
+            </div>
           </div>
-
-          <div className="flex flex-row flex-wrap gap-x-4 gap-y-2">
-            <FragranceAttributeList type="character" values={character} />
-            <FragranceAttributeList type="accord" values={accords} />
-          </div>
-        </div>
-
-        <CardAction>
-          <Button variant="ghost" className="text-gray-500" size="sm">
-            <SquarePen />
-          </Button>
-        </CardAction>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-4">
-        {reviews && <FragranceReviewList reviews={reviews} />}
-      </CardContent>
-    </Card>
+          <CardAction>
+            <DrawerTrigger
+              render={
+                <Button variant="ghost" className="text-gray-500" size="sm" />
+              }
+            >
+              <SquarePen />
+            </DrawerTrigger>
+          </CardAction>
+        </CardHeader>
+        <CardContent className="flex flex-col gap-4">
+          {reviews && <FragranceReviewList reviews={reviews} />}
+        </CardContent>
+      </Card>
+      {editFragranceDrawer}
+    </Drawer>
   )
 }
