@@ -9,6 +9,8 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer"
 
+import { Check } from "lucide-react"
+
 import { Button } from "@/components/ui/button"
 import { Toggle } from "@/components/ui/toggle"
 import type { Accord } from "@/types/accord"
@@ -20,8 +22,13 @@ function EditAccords({ title, accords }: { title: string; accords: Accord[] }) {
       <h1 className="text-md pb-4 font-medium">{title}</h1>
       <div className="flex flex-row flex-wrap gap-2">
         {accords.map((accord) => (
-          <Toggle key={accord.id} variant="outline">
+          <Toggle
+            key={accord.id}
+            variant="outline"
+            className="group rounded-full data-pressed:bg-foreground data-pressed:text-background"
+          >
             {accord.name}
+            <Check className="hidden text-background group-aria-pressed:block" />
           </Toggle>
         ))}
       </div>
