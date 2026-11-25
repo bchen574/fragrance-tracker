@@ -4,6 +4,7 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils"
 import { Navigation } from "../components/navigation"
+import { Providers } from "./providers"
 
 const geistHeading = Geist({ subsets: ["latin"], variable: "--font-heading" })
 
@@ -35,7 +36,7 @@ export default function RootLayout({
         <ThemeProvider>
           <Navigation />
 
-          {children}
+          <Providers>{children}</Providers>
         </ThemeProvider>
       </body>
     </html>

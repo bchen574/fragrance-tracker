@@ -1,4 +1,3 @@
-import { FragranceCard } from "@/components/fragrance-card"
 import { getFragrances } from "@/lib/fragrances"
 import { FragranceList } from "@/components/fragrance-list"
 
