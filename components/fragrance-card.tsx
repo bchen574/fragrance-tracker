@@ -120,7 +120,7 @@ export function FragranceCard({
           {reviews && <FragranceReviewList reviews={reviews} />}
         </CardContent>
       </Card>
-      <EditFragranceDrawer />
+      <EditFragranceDrawer name={name} brand={brand} />
     </Drawer>
   )
 }
