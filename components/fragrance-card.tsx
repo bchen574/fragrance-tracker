@@ -102,8 +102,8 @@ export function FragranceCard({
               <h4 className="text-muted-foreground">{brand}</h4>
             </div>
             <div className="flex flex-row flex-wrap gap-x-4 gap-y-2">
-              <FragranceAttributeList type="character" values={character} />
               <FragranceAttributeList type="accord" values={accords} />
+              <FragranceAttributeList type="character" values={character} />
             </div>
           </div>
           <CardAction>
