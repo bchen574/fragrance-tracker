@@ -8,16 +8,8 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer"
+import { Drawer, DrawerTrigger } from "@/components/ui/drawer"
+import { EditFragranceDrawer } from "./edit-fragrance-drawer"
 
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
@@ -92,22 +84,6 @@ function FragranceReviewList({ reviews }: { reviews: Review[] }) {
   )
 }
 
-const editFragranceDrawer = (
-  <DrawerContent>
-    <DrawerHeader>
-      <DrawerTitle>Fragrance Name , Brand</DrawerTitle>
-    </DrawerHeader>
-    <div className="p-4">
-      <h2 className="text-sm">Section</h2>
-      <h2 className="text-sm">Content</h2>
-    </div>
-    <DrawerFooter>
-      <Button>Submit</Button>
-      <DrawerClose render={<Button variant="outline" />}>Cancel</DrawerClose>
-    </DrawerFooter>
-  </DrawerContent>
-)
-
 export function FragranceCard({
   brand,
   name,
@@ -119,7 +95,7 @@ export function FragranceCard({
     <Drawer swipeDirection="right">
       <Card className="w-full gap-1 rounded-sm">
         <CardHeader>
-          <div className="flex flex-row flex-wrap gap-x-5 gap-y-2">
+          <div className="flex flex-row flex-wrap gap-x-5 gap-y-4 pb-1">
             <div className="align-center 0 flex flex-row gap-1">
               <h4 className="font-medium">{name}</h4>
               <h4>·</h4>
@@ -144,7 +120,7 @@ export function FragranceCard({
           {reviews && <FragranceReviewList reviews={reviews} />}
         </CardContent>
       </Card>
-      {editFragranceDrawer}
+      <EditFragranceDrawer />
     </Drawer>
   )
 }
