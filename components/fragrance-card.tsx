@@ -23,6 +23,16 @@ import type { Review } from "../types/fragrance"
 
 type FragranceAttributeType = "accord" | "character"
 
+type FragranceAttributeListProps =
+  | {
+      type: "accord"
+      values?: Fragrance["accords"]
+    }
+  | {
+      type: "character"
+      values?: Fragrance["characters"]
+    }
+
 function FragranceAttributeIcon({ type }: { type: FragranceAttributeType }) {
   const iconStyling = "h-5 shrink-0 p-1 text-muted-foreground"
 
@@ -35,24 +45,24 @@ function FragranceAttributeIcon({ type }: { type: FragranceAttributeType }) {
   }
 }
 
-function FragranceAttributeList({
-  type,
-  values,
-}: {
-  type: "accord" | "character"
-  values?: string[]
-}) {
-  if (!values?.length) return null
+function FragranceAttributeList(props: FragranceAttributeListProps) {
+  if (!props.values?.length) return null
 
   return (
     <div className="flex flex-row">
-      <FragranceAttributeIcon type={type} />
+      <FragranceAttributeIcon type={props.type} />
       <div className="flex flex-row flex-wrap gap-x-1 gap-y-1">
-        {values.map((value) => (
-          <Badge key={value} variant="outline">
-            {value}
-          </Badge>
-        ))}
+        {props.type === "accord"
+          ? props.values.map((accord) => (
+              <Badge key={accord.id} variant="outline">
+                {accord.name}
+              </Badge>
+            ))
+          : props.values.map((character) => (
+              <Badge key={character.id} variant="outline">
+                {character.name}
+              </Badge>
+            ))}
       </div>
     </div>
   )
@@ -89,7 +99,7 @@ export function FragranceCard({
   name,
   accords,
   reviews,
-  character,
+  characters,
 }: Fragrance) {
   return (
     <Drawer swipeDirection="right">
@@ -103,24 +113,22 @@ export function FragranceCard({
             </div>
             <div className="flex flex-row flex-wrap gap-x-4 gap-y-2">
               <FragranceAttributeList type="accord" values={accords} />
-              <FragranceAttributeList type="character" values={character} />
+              <FragranceAttributeList type="character" values={characters} />
             </div>
           </div>
           <CardAction>
-            <DrawerTrigger
-              render={
-                <Button variant="ghost" className="text-gray-500" size="sm" />
-              }
-            >
-              <SquarePen />
-            </DrawerTrigger>
+            <EditFragranceDrawer
+              name={name}
+              brand={brand}
+              accords={accords}
+              characters={characters}
+            />
           </CardAction>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           {reviews && <FragranceReviewList reviews={reviews} />}
         </CardContent>
       </Card>
-      <EditFragranceDrawer name={name} brand={brand} />
     </Drawer>
   )
 }

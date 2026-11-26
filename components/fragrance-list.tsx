@@ -24,13 +24,18 @@ function filterFragrances(
       return false
     }
 
-    if (filters.accord && !fragrance.accords.includes(filters.accord)) {
+    if (
+      filters.accord &&
+      !fragrance.accords.some((accord) => accord.name === filters.accord)
+    ) {
       return false
     }
 
     if (
       filters.character &&
-      !fragrance.character?.includes(filters.character)
+      !fragrance.characters?.some(
+        (character) => character.name === filters.character
+      )
     ) {
       return false
     }

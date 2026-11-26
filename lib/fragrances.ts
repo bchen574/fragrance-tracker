@@ -6,10 +6,10 @@ type FragranceRow = {
   brand: string
   name: string
   fragrance_accords: {
-    accords: { name: string }
+    accords: { id: number; name: string }
   }[]
   fragrance_characters: {
-    characters: { name: string }
+    characters: { id: number; name: string }
   }[]
   reviews: {
     review: string | null
@@ -26,8 +26,8 @@ export async function getFragrances(): Promise<Fragrance[]> {
     id,
     brand,
     name,
-    fragrance_accords (accords (name)),
-    fragrance_characters (characters (name)),
+    fragrance_accords (accords (id, name)),
+    fragrance_characters (characters (id, name)),
     reviews (review, like, users (name))
   `
     )
@@ -44,11 +44,15 @@ export async function getFragrances(): Promise<Fragrance[]> {
       brand: fragrance.brand,
       name: fragrance.name,
 
-      accords: fragrance.fragrance_accords.map((item) => item.accords.name),
+      accords: fragrance.fragrance_accords.map((item) => ({
+        id: item.accords.id,
+        name: item.accords.name,
+      })),
 
-      character: fragrance.fragrance_characters.map(
-        (item) => item.characters.name
-      ),
+      characters: fragrance.fragrance_characters.map((item) => ({
+        id: item.characters.id,
+        name: item.characters.name,
+      })),
 
       reviews: fragrance.reviews.map((review) => ({
         user: review.users.name,

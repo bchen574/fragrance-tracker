@@ -29,7 +29,8 @@ export default function RootLayout({
         fontMono.variable,
         "font-sans",
         inter.variable,
-        geistHeading.variable
+        geistHeading.variable,
+        "dark"
       )}
     >
       <body className="flex flex-col items-center">
