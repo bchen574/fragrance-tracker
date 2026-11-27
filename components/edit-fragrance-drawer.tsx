@@ -18,6 +18,7 @@ import type { Accord } from "@/types/accord"
 import { useAccords } from "@/hooks/use-accords"
 import type { Fragrance } from "@/types/fragrance"
 import { SquarePen } from "lucide-react"
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 
 function EditAccords({
   title,
@@ -37,34 +38,37 @@ function EditAccords({
       <h1 className="text-md pb-2 font-medium">{title}</h1>
 
       <div className="flex flex-col">
-        {Object.entries(accordsGrouped).map(([accordGroup, accords]) => (
-          <div key={accordGroup} className="py-2">
-            <h2 className="mb-2 text-xs font-medium text-muted-foreground">
-              {accordGroup}
-            </h2>
-            <div className="flex flex-row flex-wrap gap-2">
-              {accords?.map((accord) => (
-                <Toggle
-                  key={accord.id}
-                  variant="outline"
-                  size="sm"
-                  className="group rounded-full data-pressed:bg-foreground data-pressed:text-background"
-                  pressed={value.includes(accord.id)}
-                  onPressedChange={(pressed) => {
-                    if (pressed) {
-                      onChange([...value, accord.id])
-                    } else {
-                      onChange(value.filter((id) => id !== accord.id))
-                    }
-                  }}
-                >
-                  {accord.name}
-                  <Check className="hidden text-background group-aria-pressed:block" />
-                </Toggle>
-              ))}
+        <ToggleGroup
+          multiple
+          variant="outline"
+          size="sm"
+          spacing={1}
+          value={value.map(String)}
+          onValueChange={(values) => onChange(values.map(Number))}
+          className="flex w-full flex-col items-start"
+        >
+          {Object.entries(accordsGrouped).map(([accordGroup, accords]) => (
+            <div key={accordGroup} className="py-2">
+              <h2 className="mb-2 text-xs font-medium text-muted-foreground">
+                {accordGroup}
+              </h2>
+              <div className="flex flex-row flex-wrap gap-2">
+                {accords?.map((accord) => (
+                  <ToggleGroupItem
+                    key={accord.id}
+                    variant="outline"
+                    size="sm"
+                    className="group rounded-full data-pressed:bg-foreground data-pressed:text-background"
+                    pressed={value.includes(accord.id)}
+                  >
+                    {accord.name}
+                    <Check className="hidden text-background group-aria-pressed:block" />
+                  </ToggleGroupItem>
+                ))}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </ToggleGroup>
       </div>
     </div>
   )
