@@ -42,7 +42,6 @@ function EditAccords({
           multiple
           variant="outline"
           size="sm"
-          spacing={1}
           value={value.map(String)}
           onValueChange={(values) => onChange(values.map(Number))}
           className="flex w-full flex-col items-start"
@@ -59,7 +58,7 @@ function EditAccords({
                     variant="outline"
                     size="sm"
                     className="group rounded-full data-pressed:bg-foreground data-pressed:text-background"
-                    pressed={value.includes(accord.id)}
+                    value={String(accord.id)}
                   >
                     {accord.name}
                     <Check className="hidden text-background group-aria-pressed:block" />

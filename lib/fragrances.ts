@@ -62,3 +62,10 @@ export async function getFragrances(): Promise<Fragrance[]> {
     }))
     .sort((a, b) => a.brand.localeCompare(b.brand))
 }
+
+export async function editFragrances() {
+  const {data , error} = await supabase
+  .from {"fragrance_accords"}
+   .delete()
+  .eq("fragrance_id", fragranceId)
+}
