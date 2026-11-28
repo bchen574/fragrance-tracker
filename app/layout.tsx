@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils"
 import { Navigation } from "../components/navigation"
 import { Providers } from "./providers"
+import { Toaster } from "@/components/ui/sonner"
 
 const geistHeading = Geist({ subsets: ["latin"], variable: "--font-heading" })
 
@@ -38,6 +39,7 @@ export default function RootLayout({
           <Navigation />
 
           <Providers>{children}</Providers>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

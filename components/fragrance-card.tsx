@@ -95,6 +95,7 @@ function FragranceReviewList({ reviews }: { reviews: Review[] }) {
 }
 
 export function FragranceCard({
+  id,
   brand,
   name,
   accords,
@@ -118,6 +119,7 @@ export function FragranceCard({
           </div>
           <CardAction>
             <EditFragranceDrawer
+              id={id}
               name={name}
               brand={brand}
               accords={accords}

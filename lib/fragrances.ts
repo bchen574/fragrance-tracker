@@ -63,9 +63,31 @@ export async function getFragrances(): Promise<Fragrance[]> {
     .sort((a, b) => a.brand.localeCompare(b.brand))
 }
 
-export async function editFragrances() {
-  const {data , error} = await supabase
-  .from {"fragrance_accords"}
-   .delete()
-  .eq("fragrance_id", fragranceId)
+export async function updateFragranceAccords(
+  fragranceId: number,
+  accordIds: number[]
+) {
+  const { error: deleteError } = await supabase
+    .from("fragrance_accords")
+    .delete()
+    .eq("fragrance_id", fragranceId)
+
+  if (deleteError) {
+    throw new Error(deleteError.message)
+  }
+
+  if (accordIds.length === 0) return
+
+  const { error: insertError } = await supabase
+    .from("fragrance_accords")
+    .insert(
+      accordIds.map((accordId) => ({
+        fragrance_id: fragranceId,
+        accord_id: accordId,
+      }))
+    )
+
+  if (insertError) {
+    throw new Error(insertError.message)
+  }
 }

@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/drawer"
 import { useForm, Controller } from "react-hook-form"
 import { Check } from "lucide-react"
+
+import { useState } from "react"
 import { Separator } from "./ui/separator"
 
 import { Button } from "@/components/ui/button"
@@ -19,6 +21,8 @@ import { useAccords } from "@/hooks/use-accords"
 import type { Fragrance } from "@/types/fragrance"
 import { SquarePen } from "lucide-react"
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import { useUpdateFragranceAccords } from "@/hooks/use-update-fragrance-accords"
+import { toast } from "sonner"
 
 function EditAccords({
   title,
@@ -74,17 +78,19 @@ function EditAccords({
 }
 
 export function EditFragranceDrawer({
+  id,
   name,
   brand,
   accords,
-  characters,
 }: {
+  id: number
   name: string
   brand: string
   accords: Fragrance["accords"]
   characters: Fragrance["characters"]
 }) {
   const { data: allAccords = [] } = useAccords()
+  const [open, setOpen] = useState(false)
 
   const form = useForm({
     defaultValues: {
@@ -92,16 +98,35 @@ export function EditFragranceDrawer({
     },
   })
 
+  const mutation = useUpdateFragranceAccords()
+
   function onSubmit(data: { accords: number[] }) {
-    console.log(data)
+    mutation.mutate(
+      {
+        fragranceId: id,
+        accordIds: data.accords,
+      },
+      {
+        onSuccess: () => {
+          form.reset(data)
+          toast.success("Fragrance updated.", { position: "top-center" })
+          setOpen(false)
+        },
+        onError: () => {
+          toast.error("Failed to update fragrance")
+        },
+      }
+    )
   }
 
   return (
     <Drawer
       swipeDirection="right"
       onOpenChange={(open) => {
+        setOpen(open)
         if (!open) form.reset()
       }}
+      open={open}
     >
       <DrawerTrigger
         render={<Button variant="ghost" className="text-gray-500" size="sm" />}

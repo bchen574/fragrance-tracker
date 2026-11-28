@@ -1,12 +1,11 @@
-import { getFragrances } from "@/lib/fragrances"
-import { FragranceList } from "@/components/fragrance-list"
-import { getAccords } from "@/lib/accords"
-import { getAccordCategories } from "@/lib/accords"
+"use client"
 
-export default async function Page() {
-  const fragrances = await getFragrances()
-  const accords = await getAccords()
-  const accordCategories = await getAccordCategories()
+import { FragranceList } from "@/components/fragrance-list"
+
+import { useFragrances } from "@/hooks/use-fragrances"
+
+export default function Page() {
+  const { data: fragrances = [] } = useFragrances()
 
   return (
     <div className="flex min-h-svh w-full flex-col items-center p-6">
